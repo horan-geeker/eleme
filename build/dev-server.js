@@ -15,6 +15,32 @@ var port = process.env.PORT || config.dev.port
 var proxyTable = config.dev.proxyTable
 
 var app = express()
+// TODO：自定义读取数据，之后改为lumen写的接口
+var appData = require('../data.json')
+var sellers = appData.sellers
+var goods = appData.goods
+var rating = appData.ratings
+var apiRoutes = express.Router()
+apiRoutes.get('/sellers',function (request ,response) {
+  response.json({
+    errno:0,
+    data:sellers,
+  })
+})
+apiRoutes.get('/goods',function (request ,response) {
+  response.json({
+    errno:0,
+    data:goods,
+  })
+})
+apiRoutes.get('/rating',function (request ,response) {
+  response.json({
+    errno:0,
+    data:rating,
+  })
+})
+app.use('/api',apiRoutes)
+
 var compiler = webpack(webpackConfig)
 
 var devMiddleware = require('webpack-dev-middleware')(compiler, {
