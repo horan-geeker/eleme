@@ -8,6 +8,8 @@ import goods from 'components/goods/goods.vue'
 import sellers from 'components/sellers/sellers.vue'
 import ratings from 'components/ratings/ratings.vue'
 
+import 'assets/scss/app.scss'
+
 Vue.config.debug = true
 
 Vue.use(VueRouter)
