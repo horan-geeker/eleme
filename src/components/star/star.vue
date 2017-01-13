@@ -109,12 +109,6 @@ export default{
             }
             return result
         }
-    },
-    data () {
-        return {
-            score: 'hello vue'
-        }
     }
 }
-
 </script>
