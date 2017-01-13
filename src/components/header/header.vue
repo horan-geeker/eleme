@@ -13,7 +13,7 @@
                     {{seller.description}}/{{seller.deliveryTime}}分钟送达
                 </div>
                 <div v-if="seller.supports" class="support">
-                    <span class="icon" :class="classMap[seller.supports[0].type]"></span>
+                    <icon :type="seller.supports[0].type" size="large-icon"></icon>
                     <span class="text">{{seller.supports[0].description}}</span>
                 </div>
             </div>
@@ -41,7 +41,7 @@
                         <line-title-line title="优惠信息"></line-title-line>
                         <ul v-if="seller.supports" class="supports">
                             <li class="support-item" v-for="item in seller.supports">
-                                <span class="icon" :class="classMap[item.type]"></span>
+                                <icon :type="item.type" size="large-icon"></icon>
                                 <span class="text">{{item.description}}</span>
                             </li>
                         </ul>
@@ -113,22 +113,6 @@
                         margin-right: 4px;
                         background-size: 12px 12px;
                         background-repeat: no-repeat;
-
-                        &.decrease {
-                            @include bg-image('decrease_1')
-                        }
-                        &.discount {
-                            @include bg-image('discount_1')
-                        }
-                        &.guarantee {
-                            @include bg-image('guarantee_1')
-                        }
-                        &.invoice {
-                            @include bg-image('invoice_1')
-                        }
-                        &.special {
-                            @include bg-image('special_1')
-                        }
                     }
                     .text {
                         vertical-align: top;
@@ -219,7 +203,6 @@
             overflow: auto;
             background-color: rgba(7, 17, 27, 0.8);
 
-
             .detail-wrapper {
                 width: 100%;
                 min-height: 100%;
@@ -258,21 +241,6 @@
                                 vertical-align: top;
                                 margin-right: 6px;
                                 background-size: 16px 16px;
-                                &.decrease {
-                                    @include bg-image('decrease_2')
-                                }
-                                &.discount {
-                                    @include bg-image('discount_2')
-                                }
-                                &.guarantee {
-                                    @include bg-image('guarantee_2')
-                                }
-                                &.invoice {
-                                    @include bg-image('invoice_2')
-                                }
-                                &.special {
-                                    @include bg-image('special_2')
-                                }
                             }
                             .text {
                                 line-height: 12px;
@@ -311,6 +279,7 @@
 
 <script>
 import star from 'components/star/star.vue'
+import icon from 'components/icon/icon.vue'
 import lineTitleLine from './line-title-line'
 
 export default{
@@ -336,7 +305,7 @@ export default{
         }
     },
     components: {
-        star, lineTitleLine
+        star, lineTitleLine, icon
     }
 }
 </script>

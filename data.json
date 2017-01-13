@@ -50,6 +50,32 @@
   },
   "goods": [
     {
+      "name": "单人精彩套餐",
+      "type": 2,
+      "foods": [
+        {
+          "name": "红枣山药粥套餐",
+          "price": 29,
+          "oldPrice": 36,
+          "description": "红枣山药糙米粥,素材包,爽口莴笋丝,四川泡菜或八宝酱菜,配菜可备注",
+          "sellCount": 17,
+          "rating": 100,
+          "info": "",
+          "ratings": [
+            {
+              "username": "2******3",
+              "rateTime": 1469271264000,
+              "rateType": 0,
+              "text": "",
+              "avatar": "http://static.galileo.xiaojukeji.com/static/tms/default_header.png"
+            }
+          ],
+          "icon": "http://fuss10.elemecdn.com/6/72/cb844f0bb60c502c6d5c05e0bddf5jpeg.jpeg?imageView2/1/w/114/h/114",
+          "image": "http://fuss10.elemecdn.com/6/72/cb844f0bb60c502c6d5c05e0bddf5jpeg.jpeg?imageView2/1/w/750/h/750"
+        }
+      ]
+    },
+    {
       "name": "热销榜",
       "type": -1,
       "foods": [
@@ -394,32 +420,7 @@
         }
       ]
     },
-    {
-      "name": "单人精彩套餐",
-      "type": 2,
-      "foods": [
-        {
-          "name": "红枣山药粥套餐",
-          "price": 29,
-          "oldPrice": 36,
-          "description": "红枣山药糙米粥,素材包,爽口莴笋丝,四川泡菜或八宝酱菜,配菜可备注",
-          "sellCount": 17,
-          "rating": 100,
-          "info": "",
-          "ratings": [
-            {
-              "username": "2******3",
-              "rateTime": 1469271264000,
-              "rateType": 0,
-              "text": "",
-              "avatar": "http://static.galileo.xiaojukeji.com/static/tms/default_header.png"
-            }
-          ],
-          "icon": "http://fuss10.elemecdn.com/6/72/cb844f0bb60c502c6d5c05e0bddf5jpeg.jpeg?imageView2/1/w/114/h/114",
-          "image": "http://fuss10.elemecdn.com/6/72/cb844f0bb60c502c6d5c05e0bddf5jpeg.jpeg?imageView2/1/w/750/h/750"
-        }
-      ]
-    },
+
     {
       "name": "冰爽饮品限时特惠",
       "type": 1,
