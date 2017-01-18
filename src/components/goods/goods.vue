@@ -1,21 +1,21 @@
 <template>
     <div class="goods">
-        <div v-if="goods" class="menu-wrapper">
+        <div v-if="goods" class="menu-wrapper" ref="menuWrapper">
             <ul>
-                <li v-for="item in goods" class="menu-item">
+                <li v-for="(item,index) in goods" class="menu-item" :class="{'current':currentIndex===index}" @click="selectMenu(index,$event)">
                     <span class="text">
                         <icon v-show="item.type > 0" :type="item.type" size="small-fullcolor-icon"></icon>{{item.name}}
                     </span>
                 </li>
             </ul>
         </div>
-        <div class="foods-wrapper">
+        <div class="foods-wrapper" ref="foodsWrapper">
             <ul>
-                <li v-for="item in goods" class="food-list">
+                <li v-for="item in goods" class="food-list food-list-hook">
                     <h1 class="title">{{item.name}}</h1>
                     <ul>
                         <li v-for="food in item.foods" class="food-item">
-                            <div class="icon"><img width="56" height="56" :src="food.image"></div>
+                            <div class="icon"><img width="57" height="57" :src="food.image"></div>
                             <div class="content">
                                 <h2 class="name">{{food.name}}</h2>
                                 <p class="description">{{food.description}}</p>
@@ -50,12 +50,22 @@
             flex: 0 0 80px
             width: 80px
             background: #f3f5f7
+
             .menu-item
                 display: table
                 height: 54px
                 width: 56px
                 padding: 0 12px
                 line-height: 14px
+                &.current
+                    position: relative
+                    z-index: 10
+                    margin-top: -1px
+                    background: #fff
+                    font-weight: 700
+                    .text
+                        &:after
+                            border-top: none
                 .text
                     display: table-cell
                     width: 56px
@@ -71,6 +81,7 @@
                     margin-right: 2px
                     background-size: 12px 12px
                     background-repeat: no-repeat
+
 
     .foods-wrapper
         flex: 1
@@ -101,7 +112,7 @@
                 .description, .extra
                     font-size: 10px
                     color: rgb(147, 154, 159)
-                    line-height: 10px
+                    line-height: 12px
                 .description
                     margin-bottom: 8px
                 .month-sell
@@ -122,26 +133,83 @@
 <script>
 const ERR_OK = 0
 import icon from 'components/icon/icon.vue'
+import BetterScroll from 'better-scroll'
+
 export default{
 
     props: {
         seller: {}
     },
-    created () {
+    created() {
         this.$http.get('/api/goods').then((response) => {
             response = response.body
             if (response.errno === ERR_OK) {
                 this.goods = response.data
+                this.$nextTick(() => {
+                    this._initScroll()
+                    this._calculateHeight()
+                })
             }
         })
     },
-    data () {
+    data() {
         return {
-            goods: null
+            goods: null,
+            listHeight: [],
+            scrollY: 0
+        }
+    },
+    computed: {
+        currentIndex() {
+            for (let i = 0; i < this.listHeight.length; i++) {
+                var topHeight = this.listHeight[i]
+                var bottomHeight = this.listHeight[i + 1]
+                if (!bottomHeight || (this.scrollY >= topHeight && this.scrollY < bottomHeight)) {
+                    return i
+                }
+            }
+            return 0
         }
     },
     components: {
         icon
+    },
+    methods: {
+        _initScroll() {
+            this.menuScroll = new BetterScroll(this.$refs.menuWrapper, {
+                click: true
+            })
+            this.foodsScroll = new BetterScroll(this.$refs.foodsWrapper, {
+                probeType: 3,
+                click: true
+            })
+
+            this.foodsScroll.on('scroll', (pos) => {
+                this.scrollY = Math.abs(Math.round(pos.y))
+            })
+        },
+        _calculateHeight() {
+            let foodList = this.$refs.foodsWrapper.getElementsByClassName('food-list-hook')
+            let height = 0
+            this.listHeight.push(height)
+            for (var i = 0; i < foodList.length; i++) {
+                var item = foodList[i]
+                height += item.clientHeight
+                this.listHeight.push(height)
+            }
+        },
+        selectMenu(index, event) {
+            if (!event._constructed) {
+                return
+            }
+            let foodList = this.$refs.foodsWrapper.getElementsByClassName('food-list-hook')
+            let el = foodList[index]
+            this.foodsScroll.scrollToElement(el, 300)
+        },
+        selectFoods(index) {
+            console.log(index)
+        }
     }
 }
+
 </script>

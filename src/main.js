@@ -13,6 +13,7 @@ import 'assets/scss/app.scss'
 Vue.config.debug = true
 
 Vue.use(VueRouter)
+
 Vue.use(VueResource)
 
 const routes = [

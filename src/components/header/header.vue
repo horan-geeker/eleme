@@ -293,7 +293,7 @@ export default{
             detailShow: false
         }
     },
-    created () {
+    created() {
         this.classMap = ['decrease', 'discount', 'special', 'invoice', 'guarantee']
     },
     methods: {

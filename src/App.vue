@@ -20,7 +20,7 @@
 import header from './components/header/header.vue'
 const ERR_OK = 0
 export default{
-    created () {
+    created() {
         this.$http.get('/api/sellers').then((response) => {
             response = response.body
             if (response.errno === ERR_OK) {
@@ -28,7 +28,7 @@ export default{
             }
         })
     },
-    data () {
+    data() {
         return {
             seller: {}
         }
