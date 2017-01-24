@@ -2,7 +2,8 @@
     <div class="goods">
         <div v-if="goods" class="menu-wrapper" ref="menuWrapper">
             <ul>
-                <li v-for="(item,index) in goods" class="menu-item" :class="{'current':currentIndex===index}" @click="selectMenu(index,$event)">
+                <li v-for="(item,index) in goods" class="menu-item" :class="{'current':currentIndex===index}"
+                    @click="selectMenu(index,$event)">
                     <span class="text">
                         <icon v-show="item.type > 0" :type="item.type" size="small-fullcolor-icon"></icon>{{item.name}}
                     </span>
@@ -14,7 +15,7 @@
                 <li v-for="item in goods" class="food-list food-list-hook">
                     <h1 class="title">{{item.name}}</h1>
                     <ul>
-                        <li v-for="food in item.foods" class="food-item">
+                        <li v-for="food in item.foods" class="food-item" @click="selectFood(food,$event)">
                             <div class="icon"><img width="57" height="57" :src="food.image"></div>
                             <div class="content">
                                 <h2 class="name">{{food.name}}</h2>
@@ -27,6 +28,9 @@
                                     <span>￥{{food.price}}</span>
                                     <span v-show="food.oldPrice" class="old-price">￥{{food.oldPrice}}</span>
                                 </div>
+                                <div class="cart-wrapper">
+                                    <cart-control @add="addFood" :food="food"></cart-control>
+                                </div>
                             </div>
                         </li>
 
@@ -34,6 +38,9 @@
                 </li>
             </ul>
         </div>
+        <shopcart ref="shopCart" :select-foods="selectFoods" :delivery-price="seller.deliveryPrice"
+                  :min-price="seller.minPrice"></shopcart>
+        <food @add="addFood" ref="food" :food="selectedFood"></food>
     </div>
 </template>
 <style lang="sass">
@@ -82,7 +89,6 @@
                     background-size: 12px 12px
                     background-repeat: no-repeat
 
-
     .foods-wrapper
         flex: 1
         .title
@@ -127,18 +133,47 @@
                         color: rgb(147, 153, 159)
                         font-weight: normal
                         text-decoration: line-through
-
+                .cart-wrapper
+                    position: absolute
+                    right: 0
+                    bottom: 12px
 </style>
 
 <script>
 const ERR_OK = 0
 import icon from 'components/icon/icon.vue'
+import shopcart from 'components/shopcart/shopcart.vue'
+import cartControl from 'components/cart-control/cart-control.vue'
+import food from 'components/food/food.vue'
 import BetterScroll from 'better-scroll'
 
 export default{
 
     props: {
         seller: {}
+    },
+    computed: {
+        currentIndex() {
+            for (let i = 0; i < this.listHeight.length; i++) {
+                var topHeight = this.listHeight[i]
+                var bottomHeight = this.listHeight[i + 1]
+                if (!bottomHeight || (this.scrollY >= topHeight && this.scrollY < bottomHeight)) {
+                    return i
+                }
+            }
+            return 0
+        },
+        selectFoods() {
+            let foods = []
+            this.goods.forEach((good) => {
+                good.foods.forEach((food) => {
+                    if (food.count) {
+                        foods.push(food)
+                    }
+                })
+            })
+            return foods
+        }
     },
     created() {
         this.$http.get('/api/goods').then((response) => {
@@ -154,25 +189,14 @@ export default{
     },
     data() {
         return {
-            goods: null,
+            goods: [],
             listHeight: [],
-            scrollY: 0
-        }
-    },
-    computed: {
-        currentIndex() {
-            for (let i = 0; i < this.listHeight.length; i++) {
-                var topHeight = this.listHeight[i]
-                var bottomHeight = this.listHeight[i + 1]
-                if (!bottomHeight || (this.scrollY >= topHeight && this.scrollY < bottomHeight)) {
-                    return i
-                }
-            }
-            return 0
+            scrollY: 0,
+            selectedFood: {}
         }
     },
     components: {
-        icon
+        icon, shopcart, cartControl, food
     },
     methods: {
         _initScroll() {
@@ -206,8 +230,18 @@ export default{
             let el = foodList[index]
             this.foodsScroll.scrollToElement(el, 300)
         },
-        selectFoods(index) {
-            console.log(index)
+        selectFood(food, event) {
+            if (!event._constructed) {
+                return
+            }
+            this.selectedFood = food
+            this.$refs.food.changeShow()
+        },
+        addFood(target) {
+            // 优化性能，异步执行下落动画
+            this.$nextTick(() => {
+                this.$refs.shopCart.drop(target)
+            })
         }
     }
 }
