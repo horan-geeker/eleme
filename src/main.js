@@ -23,9 +23,12 @@ const routes = [
 ]
 
 const router = new VueRouter({
-    routes, linkActiveClass: 'active'
+    routes,
+    linkActiveClass: 'active',
+    history: true,
+    saveScrollPosition: true
 })
 
 new Vue(Vue.util.extend({router}, App)).$mount('#app')
 
-router.push('/goods')
+// router.push('/goods')

@@ -33,7 +33,7 @@ apiRoutes.get('/goods', function (request, response) {
         data: goods,
     })
 })
-apiRoutes.get('/rating', function (request, response) {
+apiRoutes.get('/ratings', function (request, response) {
     response.json({
         errno: 0,
         data: rating,

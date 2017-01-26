@@ -3,34 +3,45 @@
         <v-header :seller="seller"></v-header>
         <div class="tab">
             <div class="tab-item">
-                <router-link :to="{path:'/goods'}">商品</router-link>
+                <router-link to="/goods">商品</router-link>
             </div>
             <div class="tab-item">
-                <router-link :to="{path:'/ratings'}">评论</router-link>
+                <router-link to="/ratings">评论</router-link>
             </div>
             <div class="tab-item">
-                <router-link :to="{path:'/sellers'}">商家</router-link>
+                <router-link to="/sellers">商家</router-link>
             </div>
         </div>
-        <router-view :seller="seller"></router-view>
+        <keep-alive>
+            <router-view :seller="seller"></router-view>
+        </keep-alive>
     </div>
 </template>
 
 <script>
+import {urlParse} from 'assets/js/helpers.js'
 import header from './components/header/header.vue'
+
 const ERR_OK = 0
 export default{
     created() {
+        console.log(urlParse())
         this.$http.get('/api/sellers').then((response) => {
             response = response.body
             if (response.errno === ERR_OK) {
-                this.seller = response.data
+                this.seller = Object.assign({}, this.seller, response.data)
             }
         })
     },
     data() {
         return {
-            seller: {}
+            seller: {
+                id: (() => {
+                    let queryParam = urlParse()
+                    console.log(queryParam)
+                    return queryParam.id
+                })()
+            }
         }
     },
     components: {
