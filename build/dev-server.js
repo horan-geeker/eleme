@@ -17,14 +17,14 @@ var proxyTable = config.dev.proxyTable
 var app = express()
 // TODO：自定义读取数据，之后改为lumen写的接口
 var appData = require('../data.json')
-var sellers = appData.sellers
+var seller = appData.seller
 var goods = appData.goods
 var rating = appData.ratings
 var apiRoutes = express.Router()
-apiRoutes.get('/sellers', function (request, response) {
+apiRoutes.get('/seller', function (request, response) {
     response.json({
         errno: 0,
-        data: sellers,
+        data: seller,
     })
 })
 apiRoutes.get('/goods', function (request, response) {
