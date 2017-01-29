@@ -17,7 +17,8 @@ Vue.use(VueRouter)
 Vue.use(VueResource)
 
 const routes = [
-    {path: '/goods', component: goods},
+    // {path: '/', redirect: '/goods'},
+    {path: '/goods', component: goods, alias: '/'},
     {path: '/sellers', component: sellers},
     {path: '/ratings', component: ratings}
 ]
@@ -25,8 +26,7 @@ const routes = [
 const router = new VueRouter({
     routes,
     linkActiveClass: 'active',
-    history: true,
-    saveScrollPosition: true
+    mode: 'history'
 })
 
 new Vue(Vue.util.extend({router}, App)).$mount('#app')
