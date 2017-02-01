@@ -44,6 +44,10 @@ export default{
             }
         }
     },
+    mounted() {
+        // 更改loading状态,，隐藏index中的loading画面
+        window.hideLoadingPage()
+    },
     components: {
         'v-header': header
     }
