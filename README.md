@@ -1,6 +1,6 @@
 # eleme
 
-> laravel5.3 api and vue2.1 api and vue2.0
+> 使用 vue2.1 以及 lumen5.3 制作饿了么app部分页面，参考慕课网
 
 ## Build Setup
 
