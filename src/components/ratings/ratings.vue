@@ -25,7 +25,7 @@
                 </div>
             </div>
             <split></split>
-            <rating-select @select="selectRating" :selectType="selectedType" @toggle="toggleContent" :onlyConetnt="onlyContent" :ratings="ratings"></rating-select>
+            <rating-select @select="selectRating" :selectType="selectedType" @toggle="toggleContent" :onlyContent="onlyContent" :ratings="ratings"></rating-select>
             <div class="ratings-wrapper">
                 <ul>
                     <li v-for="rating in ratings" v-show="needShow(rating.rateType,rating.text)" class="rating-item">
@@ -203,7 +203,7 @@
             return {
                 ratings: [],
                 selectedType: ALL,
-                onlyContent: false
+                onlyContent: true
             }
         },
         created() {
