@@ -3,4 +3,4 @@ MAINTAINER hejunwei
 
 expose 8008
 
-CMD npm run build && cp -r dist/* /usr/share/nginx/html/
+CMD cp -r dist/* /usr/share/nginx/html/

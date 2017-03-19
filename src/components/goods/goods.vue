@@ -146,6 +146,7 @@ import shopcart from 'components/shopcart/shopcart.vue'
 import cartControl from 'components/cart-control/cart-control.vue'
 import food from 'components/food/food.vue'
 import BetterScroll from 'better-scroll'
+import config from '../../config'
 
 export default{
 
@@ -176,7 +177,7 @@ export default{
         }
     },
     created() {
-        this.$http.get('/api/goods').then((response) => {
+        this.$http.get(config.api.goods).then((response) => {
             response = response.body
             if (response.errno === ERR_OK) {
                 this.goods = response.data

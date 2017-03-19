@@ -189,6 +189,7 @@
     import star from 'components/star/star'
     import split from 'components/split/split'
     import ratingSelect from 'components/rating-select/rating-select'
+    import config from '../../config'
 
     const ERR_OK = 0
     const ALL = 2
@@ -207,7 +208,7 @@
             }
         },
         created() {
-            this.$http.get('/api/ratings').then((response) => {
+            this.$http.get(config.api.ratings).then((response) => {
                 response = response.body
                 if (response.errno === ERR_OK) {
                     this.ratings = response.data

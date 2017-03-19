@@ -21,12 +21,13 @@
 <script>
 import {urlParse} from 'assets/js/helpers.js'
 import header from './components/header/header.vue'
+import config from './config'
 
 const ERR_OK = 0
 export default{
     created() {
         console.log(urlParse())
-        this.$http.get('/api/seller').then((response) => {
+        this.$http.get(config.api.seller).then((response) => {
             response = response.body
             if (response.errno === ERR_OK) {
                 this.seller = Object.assign({}, this.seller, response.data)
