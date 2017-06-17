@@ -2,7 +2,7 @@
 
 > 使用 vue2.1 以及 lumen5.3 制作饿了么app部分页面，参考慕课网  
 > 后台代码[eleme-lumen](https://github.com/horan-geeker/eleme-lumen)
-> 使用 jenkins 持续集成
+> 使用 jenkins 持续集成,github jenkins service
 
 ## Build Setup
 
